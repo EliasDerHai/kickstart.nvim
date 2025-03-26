@@ -164,6 +164,9 @@ vim.opt.confirm = true
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
+vim.keymap.set('n', '<F1>', '<Esc>')
+vim.keymap.set('i', '<F1>', '<Esc>')
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -313,7 +316,7 @@ require('lazy').setup({
           BS = '<BS> ',
           Space = '<Space> ',
           Tab = '<Tab> ',
-          F1 = '<F1>',
+          F1 = '<F1> ',
           F2 = '<F2>',
           F3 = '<F3>',
           F4 = '<F4>',
@@ -610,6 +613,8 @@ require('lazy').setup({
           --
           -- This may be unwanted, since they displace some of your code
           if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
+            -- Turn on inlay hints as default
+            vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
             map('<leader>th', function()
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
             end, '[T]oggle Inlay [H]ints')
