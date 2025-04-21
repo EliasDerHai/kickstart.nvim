@@ -1,7 +1,3 @@
--- You can add your own plugins here or in other files in this directory!
---  I promise not to create any merge conflicts in this directory :)
---
--- See the kickstart.nvim README for more information
 return {
   -- Rust advanced
   {
@@ -21,6 +17,26 @@ return {
     config = function()
       local dap = require 'dap'
       local ui = require 'dapui'
+
+      -- in your dap setup (e.g. right after require("dap"))
+      -- Orange circle for breakpoints
+      vim.fn.sign_define('DapBreakpoint', {
+        text = '🟠',
+        texthl = 'DapBreakpointSign',
+        linehl = '',
+        numhl = '',
+      })
+      vim.api.nvim_set_hl(0, 'DapBreakpointSign', { fg = '#FFA500' })
+
+      -- Strong highlight for the current stopped line
+      vim.fn.sign_define('DapStopped', {
+        text = '▶️',
+        texthl = 'DapStoppedSign',
+        linehl = 'DapStoppedLine',
+        numhl = 'DapStoppedSign',
+      })
+      vim.api.nvim_set_hl(0, 'DapStoppedSign', { fg = '#FFFFFF', bg = '#FF4500', bold = true })
+      vim.api.nvim_set_hl(0, 'DapStoppedLine', { bg = '#3A1F1F', bold = true })
 
       require('dapui').setup()
       require('nvim-dap-virtual-text').setup()
