@@ -589,6 +589,7 @@ require('lazy').setup({
 
       local ocamllsp_path = vim.fn.exepath 'ocamllsp'
       if ocamllsp_path ~= '' then
+        local lspconfig = require 'lspconfig'
         lspconfig.ocamllsp.setup {
           cmd = { ocamllsp_path },
           capabilities = capabilities,
@@ -608,7 +609,7 @@ require('lazy').setup({
         -- clangd = {},
         -- gopls = {},
         -- pyright = {},
-        rust_analyzer = {},
+        -- rust_analyzer = {},
         elixirls = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -659,6 +660,9 @@ require('lazy').setup({
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
         automatic_installation = false,
         handlers = {
+          ['rust_analyzer'] = function()
+            -- do nothing here, rustaceanvim will setup rust-analyzer instead
+          end,
           function(server_name)
             local server = servers[server_name] or {}
             -- This handles overriding only values explicitly passed

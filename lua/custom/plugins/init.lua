@@ -1,9 +1,74 @@
--- You can add your own plugins here or in other files in this directory!
---  I promise not to create any merge conflicts in this directory :)
---
--- See the kickstart.nvim README for more information
 return {
+  -- Rust advanced
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^6',
+    lazy = false,
+    dependencies = { 'mfussenegger/nvim-dap' },
+  },
+  {
+    'mfussenegger/nvim-dap',
+    dependencies = {
+      'rcarriga/nvim-dap-ui',
+      'theHamsta/nvim-dap-virtual-text',
+      'nvim-neotest/nvim-nio',
+      'williamboman/mason.nvim',
+    },
+    config = function()
+      local dap = require 'dap'
+      local ui = require 'dapui'
 
+      -- in your dap setup (e.g. right after require("dap"))
+      -- Orange circle for breakpoints
+      vim.fn.sign_define('DapBreakpoint', {
+        text = '🟠',
+        texthl = 'DapBreakpointSign',
+        linehl = '',
+        numhl = '',
+      })
+      vim.api.nvim_set_hl(0, 'DapBreakpointSign', { fg = '#FFA500' })
+
+      -- Strong highlight for the current stopped line
+      vim.fn.sign_define('DapStopped', {
+        text = '▶️',
+        texthl = 'DapStoppedSign',
+        linehl = 'DapStoppedLine',
+        numhl = 'DapStoppedSign',
+      })
+      vim.api.nvim_set_hl(0, 'DapStoppedSign', { fg = '#FFFFFF', bg = '#FF4500', bold = true })
+      vim.api.nvim_set_hl(0, 'DapStoppedLine', { bg = '#3A1F1F', bold = true })
+
+      require('dapui').setup()
+      require('nvim-dap-virtual-text').setup()
+
+      vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint)
+      vim.keymap.set('n', '<leader>gb', dap.run_to_cursor)
+
+      -- Eval var under cursor
+      vim.keymap.set('n', '<leader>?', function()
+        require('dapui').eval(nil, { enter = true })
+      end)
+
+      vim.keymap.set('n', '<F5>', dap.continue)
+      vim.keymap.set('n', '<F11>', dap.step_into)
+      vim.keymap.set('n', '<F10>', dap.step_over)
+      vim.keymap.set('n', '<F12>', dap.step_out)
+      vim.keymap.set('n', '<F7>', dap.restart)
+
+      dap.listeners.before.attach.dapui_config = function()
+        ui.open()
+      end
+      dap.listeners.before.launch.dapui_config = function()
+        ui.open()
+      end
+      dap.listeners.before.event_terminated.dapui_config = function()
+        ui.close()
+      end
+      dap.listeners.before.event_exited.dapui_config = function()
+        ui.close()
+      end
+    end,
+  },
   -- AUTOPAIRS () "" '' etc.
   {
     'windwp/nvim-autopairs',
