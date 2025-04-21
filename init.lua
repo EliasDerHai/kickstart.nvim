@@ -32,6 +32,18 @@ vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
 
+if vim.fn.has 'wsl' == 1 then
+  vim.g.clipboard = {
+    name = 'WslClipboard',
+    copy = { ['+'] = 'clip.exe', ['*'] = 'clip.exe' },
+    paste = {
+      ['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).Replace("`r", ""))',
+      ['*'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).Replace("`r", ""))',
+    },
+    cache_enabled = false,
+  }
+end
+
 -- Enable break indent
 vim.opt.breakindent = true
 
