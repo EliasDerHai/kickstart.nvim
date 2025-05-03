@@ -43,8 +43,6 @@ return {
 
       vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint)
       vim.keymap.set('n', '<leader>gb', dap.run_to_cursor)
-
-      -- Eval var under cursor
       vim.keymap.set('n', '<leader>?', function()
         require('dapui').eval(nil, { enter = true })
       end)
@@ -93,6 +91,10 @@ return {
         sort = {
           sorter = 'case_sensitive',
         },
+        git = {
+          enable = true,
+          ignore = false,
+        },
         view = {
           width = 30,
         },
@@ -100,7 +102,8 @@ return {
           group_empty = true,
         },
         filters = {
-          dotfiles = true,
+          custom = { '.DS_Store' },
+          -- dotfiles = true,
         },
       }
     end,
