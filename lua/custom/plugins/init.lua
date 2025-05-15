@@ -96,7 +96,8 @@ return {
           ignore = false,
         },
         view = {
-          width = 30,
+          width = 50,
+          adaptive_size = false,
         },
         renderer = {
           group_empty = true,
