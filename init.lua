@@ -28,6 +28,9 @@ vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
 
+vim.opt.autowrite = true
+vim.opt.autowriteall = true
+
 -- paste in vis mode doesn't put deleted content into register (allows for multiple pastes of yanked text)
 vim.keymap.set('v', 'p', [["_dP]], { noremap = true, silent = true })
 
