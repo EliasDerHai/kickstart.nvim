@@ -300,10 +300,13 @@ return {
         'pyright',
       },
       automatic_installation = false,
+      automatic_enable = {
+        exclude = {
+          'rust_analyzer',
+          --'ts_ls'
+        },
+      },
       handlers = {
-        ['rust_analyzer'] = function()
-          -- do nothing here, rustaceanvim will setup rust-analyzer instead
-        end,
         function(server_name)
           local server = servers[server_name] or {}
           -- This handles overriding only values explicitly passed
