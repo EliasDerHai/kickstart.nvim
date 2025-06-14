@@ -1,4 +1,4 @@
-local Plugin = { 'Exafunction/codeium.vim' }
+local Plugin = { 'Exafunction/windsurf.vim' }
 -- Call :Codeium Auth after installation to get Token ID
 
 Plugin.cmd = { 'CodeiumToggle' }
