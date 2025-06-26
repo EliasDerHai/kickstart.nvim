@@ -225,38 +225,6 @@ return {
       --
       -- But for many setups, the LSP (`ts_ls`) will work just fine
       --  ts_ls = {},
-      ts_ls = {
-        -- explicitly tell it about TS and TSX files:
-        filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx' },
-        -- disable built-in formatting so we don’t fight Prettier later:
-        handlers = {
-          ['textDocument/formatting'] = function() end,
-        },
-        settings = {
-          typescript = {
-            inlayHints = {
-              includeInlayParameterNameHints = 'all',
-              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-              includeInlayFunctionParameterTypeHints = true,
-              includeInlayVariableTypeHints = true,
-              includeInlayPropertyDeclarationTypeHints = true,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayEnumMemberValueHints = true,
-            },
-          },
-          javascript = {
-            inlayHints = {
-              includeInlayParameterNameHints = 'all',
-              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-              includeInlayFunctionParameterTypeHints = true,
-              includeInlayVariableTypeHints = true,
-              includeInlayPropertyDeclarationTypeHints = true,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayEnumMemberValueHints = true,
-            },
-          },
-        },
-      },
       dockerls = {},
       docker_compose_language_service = {},
       lua_ls = {
@@ -307,7 +275,7 @@ return {
       automatic_enable = {
         exclude = {
           'rust_analyzer',
-          --'ts_ls'
+          'ts_ls', -- ts_ls' inlay_hints don't work, so I use typescrip_tools instead (lua based alternative (see init.lua))
         },
       },
       handlers = {
