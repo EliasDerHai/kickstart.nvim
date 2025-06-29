@@ -23,7 +23,7 @@ function Plugin.config()
   -- Key bindings
   vim.g.codeium_no_map_tab = false
   vim.keymap.set('i', '<Tab>', function()
-    return vim.fn['codeium#Accept']()
+    return vim.fn['codeium#Accept']() .. vim.api.nvim_replace_termcodes('<Esc>', true, false, true)
   end, { expr = true, silent = true })
   vim.keymap.set('i', '<C-j>', function()
     return vim.fn['codeium#CycleCompletions'](1)
