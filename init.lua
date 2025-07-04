@@ -441,14 +441,13 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         ocaml = { 'ocamlformat' },
-        javascript = { 'prettierd', 'prettier', stop_after_first = true },
-        typescript = { 'prettierd', 'prettier', stop_after_first = true },
-        javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-        typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-        json = { 'prettierd', 'prettier', stop_after_first = true },
-        css = { 'prettierd', 'prettier', stop_after_first = true },
-        scss = { 'prettierd', 'prettier', stop_after_first = true },
-        html = { 'prettierd', 'prettier', stop_after_first = true },
+        javascript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+        typescript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+        javascriptreact = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+        typescriptreact = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+        json = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+        css = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+        html = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
         sh = { 'shfmt' },
         bash = { 'shfmt' },
       },
@@ -641,6 +640,7 @@ require('lazy').setup({
     build = ':TSUpdate',
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+    dependencies = { 'OXY2DEV/markview.nvim' },
     opts = {
       ensure_installed = {
         'bash',
