@@ -450,6 +450,18 @@ require('lazy').setup({
         html = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
         sh = { 'shfmt' },
         bash = { 'shfmt' },
+        sql = { 'pg_format' },
+        psql = { 'pg_format' },
+        plsql = { 'pg_format' },
+      },
+      formatters = {
+        pg_format = {
+          inherit = true,
+          command = 'pg_format',
+          args = {
+            '--keep-newline',
+          },
+        },
       },
     },
   },

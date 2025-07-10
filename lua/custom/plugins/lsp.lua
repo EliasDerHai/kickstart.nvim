@@ -241,6 +241,8 @@ return {
           },
         },
       },
+      taplo = {},
+      postgres_lsp = {},
     }
 
     -- Ensure the servers and tools above are installed
@@ -270,6 +272,7 @@ return {
         'eslint',
         'lua_ls',
         'pyright',
+        'taplo',
       },
       automatic_installation = false,
       automatic_enable = {
