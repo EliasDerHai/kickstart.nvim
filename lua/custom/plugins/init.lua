@@ -5,6 +5,7 @@ return {
     version = '^6',
     lazy = false,
     dependencies = { 'mfussenegger/nvim-dap' },
+    -- config in root init.lua
   },
   {
     'mfussenegger/nvim-dap',
@@ -88,10 +89,10 @@ return {
   --   config = true,
   -- },
   -- MARKDOWN PREVIEW
-  {
-    'OXY2DEV/markview.nvim',
-    lazy = false,
-  },
+  --{
+  --  'OXY2DEV/markview.nvim',
+  --  lazy = false,
+  --},
   -- FILE TREE
   {
     'nvim-tree/nvim-tree.lua',
@@ -110,7 +111,7 @@ return {
           ignore = false,
         },
         view = {
-          width = 50,
+          width = 40,
           adaptive_size = false,
         },
         renderer = {
@@ -122,7 +123,7 @@ return {
         },
       }
 
-      vim.keymap.set('n', '<leader>z', ':NvimTreeFindFile<CR>', { noremap = true, silent = true, desc = 'find file in tree' })
+      vim.keymap.set('n', '<leader>z', ':NvimTreeFindFile<CR>', { noremap = true, silent = true, desc = 'Find file in tree' })
     end,
   },
 }

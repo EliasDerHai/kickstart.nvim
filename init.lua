@@ -147,6 +147,46 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+-- RUST
+vim.g.rustaceanvim = {
+  tools = {
+    enable_clippy = false,
+  },
+  server = {
+    default_settings = {
+      ['rust-analyzer'] = {
+        cargo = {
+          allFeatures = true,
+          loadOutDirsFromCheck = true,
+          buildScripts = { enable = true },
+        },
+        check = {
+          command = 'clippy',
+          extraArgs = { '--', '--no-deps' },
+        },
+        checkOnSave = {
+          allFeatures = true,
+        },
+        rustfmt = {
+          extraArgs = { '+nightly' },
+        },
+        procMacro = {
+          enable = true,
+          ignored = {
+            ['async-trait'] = { 'async_trait' },
+            ['napi-derive'] = { 'napi' },
+            ['async-recursion'] = { 'async_recursion' },
+          },
+        },
+      },
+    },
+    -- if you want custom on_attach, capabilities, etc. you can drop them in here too
+    on_attach = function(client, bufnr)
+      -- your keymaps, etc.
+    end,
+  },
+}
+
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -342,6 +382,8 @@ require('lazy').setup({
             '--glob',
             '!.git/',
           },
+          shorten_path = true,
+          path_display = { 'truncate' },
         },
         extensions = {
           ['ui-select'] = {
@@ -421,15 +463,13 @@ require('lazy').setup({
       },
     },
     opts = {
-      notify_on_error = false,
+      notify_on_error = true,
       format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
+        local disable_filetypes = { 'c', 'cpp', 'sql', 'psql', 'plsql' }
         local lsp_format_opt
-        if disable_filetypes[vim.bo[bufnr].filetype] then
-          lsp_format_opt = 'never'
+        local search = vim.bo[bufnr].filetype
+        if vim.tbl_contains(disable_filetypes, search) then
+          return false
         else
           lsp_format_opt = 'fallback'
         end
