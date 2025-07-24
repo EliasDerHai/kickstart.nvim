@@ -50,38 +50,38 @@ return {
         local diagnostics_mode = 'all'
         local function toggle_diagnostics_mode()
           if diagnostics_mode == 'all' then
-            vim.diagnostic.config {
+            vim.diagnostic.config({
               virtual_text = { severity = { min = vim.diagnostic.severity.ERROR } },
               signs = { severity = { min = vim.diagnostic.severity.ERROR } },
               underline = { severity = { min = vim.diagnostic.severity.ERROR } },
               update_in_insert = false,
-            }
+            })
             diagnostics_mode = 'errors'
-            print 'Diagnostics: Showing only errors'
+            print('Diagnostics: Showing only errors')
           else
-            vim.diagnostic.config {
+            vim.diagnostic.config({
               virtual_text = true,
               signs = true,
               underline = true,
               update_in_insert = false,
-            }
+            })
             diagnostics_mode = 'all'
-            print 'Diagnostics: Showing all (errors + warnings)'
+            print('Diagnostics: Showing all (errors + warnings)')
           end
         end
         map('<leader>td', toggle_diagnostics_mode, '[T]oggle [D]iagnostics')
 
-        if client and client.supports_method 'textDocument/inlayHint' then
+        if client and client.supports_method('textDocument/inlayHint') then
           vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
           map('<leader>th', function()
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr })
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
           end, '[T]oggle Inlay [H]ints')
         end
 
         --
         -- Automatic Highlighting on Cursor Hold
         --
-        if client and client.supports_method 'textDocument/documentHighlight' then
+        if client and client.supports_method('textDocument/documentHighlight') then
           local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer = bufnr,
@@ -98,7 +98,7 @@ return {
             group = lsp_augroup,
             buffer = bufnr,
             callback = function()
-              vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = bufnr }
+              vim.api.nvim_clear_autocmds({ group = 'kickstart-lsp-highlight', buffer = bufnr })
             end,
           })
         end
@@ -108,7 +108,7 @@ return {
     --
     -- Global Diagnostic Configuration
     --
-    vim.diagnostic.config {
+    vim.diagnostic.config({
       severity_sort = true,
       float = { border = 'rounded', source = 'if_many' },
       underline = { severity = vim.diagnostic.severity.ERROR },
@@ -133,7 +133,7 @@ return {
           return message_map[diagnostic.severity]
         end,
       },
-    }
+    })
 
     --
     -- LSP Server Setup
@@ -142,8 +142,8 @@ return {
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
     local servers = {
-      angularls = { filetypes = { 'html', 'typescript' } },
-      elixirls = {},
+      -- angularls = { filetypes = { 'html', 'typescript' } },
+      -- elixirls = {},
       dockerls = {},
       docker_compose_language_service = {},
       lua_ls = {
@@ -153,10 +153,12 @@ return {
           },
         },
       },
+      taplo = {},
+      postgres_lsp = {},
     }
 
     -- Setup ocamllsp if available
-    if vim.fn.executable 'ocamllsp' == 1 then
+    if vim.fn.executable('ocamllsp') == 1 then
       servers.ocamllsp = { capabilities = capabilities }
     end
 
@@ -170,19 +172,20 @@ return {
       'prettier',
       'shellcheck',
     })
-    require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+    require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
 
-    require('mason-lspconfig').setup {
+    require('mason-lspconfig').setup({
       ensure_installed = {
         'eslint',
         'lua_ls',
         'pyright',
+        'taplo',
       },
       automatic_installation = false,
       automatic_enable = {
         exclude = {
           'rust_analyzer',
-          'ts_ls', -- ts_ls' inlay_hints don't work, using typescrip_tools instead
+          'ts_ls', -- ts_ls' inlay_hints don't work, so I use typescrip_tools instead
         },
       },
       handlers = {
@@ -192,7 +195,6 @@ return {
           require('lspconfig')[server_name].setup(server)
         end,
       },
-    }
+    })
   end,
 }
-

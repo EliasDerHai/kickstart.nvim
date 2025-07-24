@@ -29,6 +29,7 @@ return {
           '--glob',
           '!.git/',
         },
+        path_display = { 'truncate' },
       },
       extensions = {
         ['ui-select'] = {

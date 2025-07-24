@@ -13,33 +13,41 @@ return {
     },
   },
   opts = {
-    notify_on_error = false,
+    notify_on_error = true,
     format_on_save = function(bufnr)
-      local disable_filetypes = { c = true, cpp = true }
-      local lsp_format_opt
-      if disable_filetypes[vim.bo[bufnr].filetype] then
-        lsp_format_opt = 'never'
-      else
-        lsp_format_opt = 'fallback'
+      local disable_filetypes = { 'c', 'cpp', 'sql', 'psql', 'plsql' }
+      if vim.tbl_contains(disable_filetypes, vim.bo[bufnr].filetype) then
+        return false
       end
       return {
         timeout_ms = 500,
-        lsp_format = lsp_format_opt,
+        lsp_format = 'fallback',
       }
     end,
     formatters_by_ft = {
       lua = { 'stylua' },
       ocaml = { 'ocamlformat' },
-      javascript = { 'prettierd', 'prettier', stop_after_first = true },
-      typescript = { 'prettierd', 'prettier', stop_after_first = true },
-      javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-      typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-      json = { 'prettierd', 'prettier', stop_after_first = true },
-      css = { 'prettierd', 'prettier', stop_after_first = true },
-      scss = { 'prettierd', 'prettier', stop_after_first = true },
-      html = { 'prettierd', 'prettier', stop_after_first = true },
+      javascript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      typescript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      javascriptreact = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      typescriptreact = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      json = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      css = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+      html = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
       sh = { 'shfmt' },
       bash = { 'shfmt' },
+      sql = { 'pg_format' },
+      psql = { 'pg_format' },
+      plsql = { 'pg_format' },
+    },
+    formatters = {
+      pg_format = {
+        inherit = true,
+        command = 'pg_format',
+        args = {
+          '--keep-newline',
+        },
+      },
     },
   },
 }

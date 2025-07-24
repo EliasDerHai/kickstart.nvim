@@ -15,7 +15,7 @@ return {
         ignore = false,
       },
       view = {
-        width = 50,
+        width = 40,
         adaptive_size = false,
       },
       renderer = {
@@ -26,6 +26,6 @@ return {
       },
     }
 
-    vim.keymap.set('n', '<leader>z', ':NvimTreeFindFile<CR>', { noremap = true, silent = true, desc = 'find file in tree' })
+    vim.keymap.set('n', '<leader>z', ':NvimTreeFindFile<CR>', { noremap = true, silent = true, desc = 'Find file in tree' })
   end,
 }
