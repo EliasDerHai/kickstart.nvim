@@ -25,11 +25,22 @@ return {
           '--line-number',
           '--column',
           '--smart-case',
-          '--hidden',
+          '--hidden', -- search hidden stuff (eg. .gitlab)
           '--glob',
           '!.git/',
         },
         path_display = { 'truncate' },
+      },
+      pickers = {
+        lsp_references = {
+          path_display = { 'tail' },
+        },
+        lsp_incoming_calls = {
+          path_display = { 'tail' },
+        },
+        lsp_outgoing_calls = {
+          path_display = { 'tail' },
+        },
       },
       extensions = {
         ['ui-select'] = {

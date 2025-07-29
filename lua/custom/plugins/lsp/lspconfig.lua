@@ -31,7 +31,8 @@ return {
         map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
         map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
         map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-
+        map('gic', require('telescope.builtin').lsp_incoming_calls, '[G]oto [i]ncoming [C]all')
+        map('goc', require('telescope.builtin').lsp_outgoing_calls, '[G]oto [o]utgoing [C]all')
         --
         -- Symbol Search
         --
@@ -50,38 +51,38 @@ return {
         local diagnostics_mode = 'all'
         local function toggle_diagnostics_mode()
           if diagnostics_mode == 'all' then
-            vim.diagnostic.config({
+            vim.diagnostic.config {
               virtual_text = { severity = { min = vim.diagnostic.severity.ERROR } },
               signs = { severity = { min = vim.diagnostic.severity.ERROR } },
               underline = { severity = { min = vim.diagnostic.severity.ERROR } },
               update_in_insert = false,
-            })
+            }
             diagnostics_mode = 'errors'
-            print('Diagnostics: Showing only errors')
+            print 'Diagnostics: Showing only errors'
           else
-            vim.diagnostic.config({
+            vim.diagnostic.config {
               virtual_text = true,
               signs = true,
               underline = true,
               update_in_insert = false,
-            })
+            }
             diagnostics_mode = 'all'
-            print('Diagnostics: Showing all (errors + warnings)')
+            print 'Diagnostics: Showing all (errors + warnings)'
           end
         end
         map('<leader>td', toggle_diagnostics_mode, '[T]oggle [D]iagnostics')
 
-        if client and client.supports_method('textDocument/inlayHint') then
+        if client and client.supports_method 'textDocument/inlayHint' then
           vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
           map('<leader>th', function()
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr })
           end, '[T]oggle Inlay [H]ints')
         end
 
         --
         -- Automatic Highlighting on Cursor Hold
         --
-        if client and client.supports_method('textDocument/documentHighlight') then
+        if client and client.supports_method 'textDocument/documentHighlight' then
           local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer = bufnr,
@@ -98,7 +99,7 @@ return {
             group = lsp_augroup,
             buffer = bufnr,
             callback = function()
-              vim.api.nvim_clear_autocmds({ group = 'kickstart-lsp-highlight', buffer = bufnr })
+              vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = bufnr }
             end,
           })
         end
@@ -108,7 +109,7 @@ return {
     --
     -- Global Diagnostic Configuration
     --
-    vim.diagnostic.config({
+    vim.diagnostic.config {
       severity_sort = true,
       float = { border = 'rounded', source = 'if_many' },
       underline = { severity = vim.diagnostic.severity.ERROR },
@@ -133,7 +134,7 @@ return {
           return message_map[diagnostic.severity]
         end,
       },
-    })
+    }
 
     --
     -- LSP Server Setup
@@ -158,7 +159,7 @@ return {
     }
 
     -- Setup ocamllsp if available
-    if vim.fn.executable('ocamllsp') == 1 then
+    if vim.fn.executable 'ocamllsp' == 1 then
       servers.ocamllsp = { capabilities = capabilities }
     end
 
@@ -172,9 +173,9 @@ return {
       'prettier',
       'shellcheck',
     })
-    require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
+    require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
-    require('mason-lspconfig').setup({
+    require('mason-lspconfig').setup {
       ensure_installed = {
         'eslint',
         'lua_ls',
@@ -195,6 +196,7 @@ return {
           require('lspconfig')[server_name].setup(server)
         end,
       },
-    })
+    }
   end,
 }
+
