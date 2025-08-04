@@ -33,6 +33,7 @@ return {
         map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
         map('gic', require('telescope.builtin').lsp_incoming_calls, '[G]oto [i]ncoming [C]all')
         map('goc', require('telescope.builtin').lsp_outgoing_calls, '[G]oto [o]utgoing [C]all')
+
         --
         -- Symbol Search
         --
@@ -199,4 +200,3 @@ return {
     }
   end,
 }
-
