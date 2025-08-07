@@ -155,11 +155,6 @@ return {
       },
     }
 
-    -- Setup ocamllsp if available
-    if vim.fn.executable 'ocamllsp' == 1 then
-      servers.ocamllsp = { capabilities = capabilities }
-    end
-
     --
     -- Mason and Server Installation
     --
@@ -193,6 +188,19 @@ return {
         end,
       },
     }
+
+    --
+    -- LSPs which aren't on Mason
+    --
+
+    -- Setup ocamllsp if available
+    if vim.fn.executable 'ocamllsp' == 1 then
+      servers.ocamllsp = { capabilities = capabilities }
+    end
+
+    -- Setup gleam if available
+    if vim.fn.executable 'gleam' == 1 then
+      require('lspconfig').gleam.setup {}
+    end
   end,
 }
-
