@@ -14,6 +14,7 @@ return {
             cargo = {
               loadOutDirsFromCheck = true,
               buildScripts = { enable = true },
+              allTargets = true,
             },
             check = {
               command = 'clippy',

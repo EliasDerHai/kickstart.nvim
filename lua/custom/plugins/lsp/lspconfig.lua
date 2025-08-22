@@ -157,6 +157,7 @@ return {
       },
       taplo = {},
       postgres_lsp = {},
+      clangd = {},
     }
 
     -- Setup ocamllsp if available
