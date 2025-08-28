@@ -142,7 +142,7 @@ return {
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
     local servers = {
-      angularls = { filetypes = { 'html', 'typescript' } },
+      -- angularls = { filetypes = { 'html', 'typescript' } },
       elixirls = {},
       dockerls = {},
       docker_compose_language_service = {},
@@ -186,6 +186,34 @@ return {
           server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
           require('lspconfig')[server_name].setup(server)
         end,
+      },
+    }
+
+    -- TODO: looks good, doesn't work
+    require('lspconfig').tailwindcss.setup {
+      capabilities = capabilities,
+      filetypes = { 'gleam', 'html' },
+      settings = {
+        tailwindCSS = {
+          classAttributes = { 'class', 'className', 'class:list', 'classList', 'ngClass', 'attribute.class' },
+          includeLanguages = {
+            eelixir = 'html-eex',
+            eruby = 'erb',
+            htmlangular = 'html',
+            templ = 'html',
+            gleam = 'javascript',
+          },
+          lint = {
+            cssConflict = 'warning',
+            invalidApply = 'error',
+            invalidConfigPath = 'error',
+            invalidScreen = 'error',
+            invalidTailwindDirective = 'error',
+            invalidVariant = 'error',
+            recommendedVariantOrder = 'warning',
+          },
+          validate = true,
+        },
       },
     }
 
