@@ -1,3 +1,20 @@
+local function setup_nvm_path()
+  local handle = io.popen 'command -v node 2>/dev/null'
+  if handle then
+    local node_path = handle:read('*a'):gsub('%s+', '')
+    handle:close()
+
+    if node_path ~= '' and node_path:match '%.nvm/' then
+      local node_dir = node_path:match '(.+)/[^/]+$'
+      if node_dir then
+        vim.env.PATH = node_dir .. ':' .. vim.env.PATH
+      end
+    end
+  end
+end
+
+setup_nvm_path()
+
 -- Load custom configuration
 require 'custom.options'
 require 'custom.keymaps'
@@ -64,4 +81,3 @@ require('lazy').setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-
