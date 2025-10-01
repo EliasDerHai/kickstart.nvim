@@ -143,9 +143,10 @@ return {
 
     local servers = {
       -- angularls = { filetypes = { 'html', 'typescript' } },
-      elixirls = {},
       dockerls = {},
       docker_compose_language_service = {},
+      elixirls = {},
+      helm_ls = {},
       lua_ls = {
         settings = {
           Lua = {
@@ -173,7 +174,7 @@ return {
         'lua_ls',
         'pyright',
       },
-      automatic_installation = false,
+      automatic_installation = true,
       automatic_enable = {
         exclude = {
           'rust_analyzer',
@@ -190,7 +191,7 @@ return {
     }
 
     -- TODO: looks good, doesn't work
-    require('lspconfig').tailwindcss.setup {
+    vim.lsp.config('tailwindcss', {
       capabilities = capabilities,
       filetypes = { 'gleam', 'html' },
       settings = {
@@ -215,7 +216,8 @@ return {
           validate = true,
         },
       },
-    }
+    })
+    vim.lsp.enable('tailwindcss')
 
     --
     -- LSPs which aren't on Mason
@@ -228,7 +230,8 @@ return {
 
     -- Setup gleam if available
     if vim.fn.executable 'gleam' == 1 then
-      require('lspconfig').gleam.setup {}
+      vim.lsp.config('gleam', {})
+      vim.lsp.enable('gleam')
     end
   end,
 }
