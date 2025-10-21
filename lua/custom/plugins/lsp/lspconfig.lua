@@ -146,6 +146,7 @@ return {
       dockerls = {},
       docker_compose_language_service = {},
       elixirls = {},
+      gopls = {},
       helm_ls = {},
       lua_ls = {
         settings = {
@@ -217,7 +218,7 @@ return {
         },
       },
     })
-    vim.lsp.enable('tailwindcss')
+    vim.lsp.enable 'tailwindcss'
 
     --
     -- LSPs which aren't on Mason
@@ -231,7 +232,7 @@ return {
     -- Setup gleam if available
     if vim.fn.executable 'gleam' == 1 then
       vim.lsp.config('gleam', {})
-      vim.lsp.enable('gleam')
+      vim.lsp.enable 'gleam'
     end
   end,
 }
