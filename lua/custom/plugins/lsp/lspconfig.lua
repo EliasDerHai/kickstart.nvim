@@ -180,6 +180,7 @@ return {
         exclude = {
           'rust_analyzer',
           'ts_ls', -- ts_ls' inlay_hints don't work, using typescrip_tools instead
+          'tailwindcss',
         },
       },
       handlers = {
@@ -191,30 +192,20 @@ return {
       },
     }
 
-    -- TODO: looks good, doesn't work
     vim.lsp.config('tailwindcss', {
       capabilities = capabilities,
-      filetypes = { 'gleam', 'html' },
+      filetypes = { 'html', 'css', 'scss', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'gleam' },
       settings = {
         tailwindCSS = {
-          classAttributes = { 'class', 'className', 'class:list', 'classList', 'ngClass', 'attribute.class' },
           includeLanguages = {
-            eelixir = 'html-eex',
-            eruby = 'erb',
-            htmlangular = 'html',
-            templ = 'html',
             gleam = 'javascript',
           },
-          lint = {
-            cssConflict = 'warning',
-            invalidApply = 'error',
-            invalidConfigPath = 'error',
-            invalidScreen = 'error',
-            invalidTailwindDirective = 'error',
-            invalidVariant = 'error',
-            recommendedVariantOrder = 'warning',
+          classAttributes = { 'class', 'className', 'class:list', 'classList', 'ngClass', 'attribute.class' },
+          classFunctions = {
+            'attribute.class',
+            'class',
+            'classes',
           },
-          validate = true,
         },
       },
     })
