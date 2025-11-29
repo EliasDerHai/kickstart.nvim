@@ -7,8 +7,8 @@ return {
       'bash',
       'c',
       'diff',
+      'glsl',
       'javascript',
-      'typescript',
       'tsx',
       'html',
       'lua',
@@ -16,9 +16,11 @@ return {
       'markdown',
       'markdown_inline',
       'query',
+      'typescript',
       'vim',
       'vimdoc',
     },
+
     auto_install = true,
     highlight = {
       enable = true,

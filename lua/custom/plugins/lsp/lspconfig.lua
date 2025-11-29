@@ -155,6 +155,8 @@ return {
           },
         },
       },
+      pyright = {},
+      glsl_analyzer = {},
     }
 
     --
@@ -166,6 +168,7 @@ return {
       'prettierd',
       'prettier',
       'shellcheck',
+      'tailwindcss-language-server',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
