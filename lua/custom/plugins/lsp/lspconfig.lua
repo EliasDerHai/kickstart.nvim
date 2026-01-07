@@ -72,7 +72,7 @@ return {
         map('<leader>td', toggle_diagnostics_mode, '[T]oggle [D]iagnostics')
 
         if client and client.supports_method 'textDocument/inlayHint' then
-          vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+          vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
           map('<leader>th', function()
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr })
           end, '[T]oggle Inlay [H]ints')
@@ -146,7 +146,7 @@ return {
       dockerls = {},
       docker_compose_language_service = {},
       elixirls = {},
-      -- gopls = {},
+      gopls = {},
       helm_ls = {},
       lua_ls = {
         settings = {
@@ -169,15 +169,12 @@ return {
       'prettier',
       'shellcheck',
       'tailwindcss-language-server',
+      'jdtls',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {
-      ensure_installed = {
-        'eslint',
-        'lua_ls',
-        'pyright',
-      },
+      ensure_installed = vim.tbl_keys(servers),
       automatic_installation = true,
       automatic_enable = {
         exclude = {
