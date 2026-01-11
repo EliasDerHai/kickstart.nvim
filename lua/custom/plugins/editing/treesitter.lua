@@ -1,7 +1,8 @@
 return {
   'nvim-treesitter/nvim-treesitter',
+  branch = 'main',
   build = ':TSUpdate',
-  main = 'nvim-treesitter.configs',
+  main = 'nvim-treesitter',
   opts = {
     ensure_installed = {
       'bash',
@@ -15,6 +16,7 @@ return {
       'luadoc',
       'markdown',
       'markdown_inline',
+      'python',
       'query',
       'typescript',
       'vim',
