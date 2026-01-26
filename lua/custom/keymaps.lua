@@ -9,7 +9,10 @@ vim.keymap.set('n', '<F1>', '<Esc>')
 vim.keymap.set('i', '<F1>', '<Esc>')
 
 -- cleanup buffers
-vim.keymap.set('n', '<leader>cb', '<Cmd>BufferLineCloseOther<CR>', { desc = 'BufferLine: Close Other Buffers' })
+vim.keymap.set('n', '<leader>cb', '<Cmd>BufferLineCloseOthers<CR>', { desc = '[C]lose Other [B]uffers' })
+vim.keymap.set('n', '<leader>cc', '<Cmd>bdelete<CR>', { desc = '[C]lose [C]urrent Buffer' })
+vim.keymap.set('n', '<leader>cr', '<Cmd>BufferLineCloseRight<CR>', { desc = '[C]lose Buffers to [R]ight' })
+vim.keymap.set('n', '<leader>cl', '<Cmd>BufferLineCloseLeft<CR>', { desc = '[C]lose Buffers to [L]eft' })
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
