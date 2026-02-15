@@ -1,9 +1,25 @@
 return {
   'nvim-java/nvim-java',
   config = function()
-    vim.lsp.config('java', {})
-    vim.lsp.enable 'java'
-    vim.lsp.config('jdtls', {})
-    vim.lsp.enable 'jdtls'
+    require('java').setup({
+      lombok = {
+        enable = true,
+        version = '1.18.40',
+      },
+      spring_boot_tools = {
+        enable = false,
+      },
+      jdtls = {
+        settings = {
+          java = {
+            completion = {
+              maxResults = 20,
+              matchCase = 'off',
+            },
+          },
+        },
+      },
+    })
+    vim.lsp.enable('jdtls')
   end,
 }
