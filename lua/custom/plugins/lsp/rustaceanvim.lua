@@ -41,16 +41,33 @@ return {
           },
         },
 
-        -- FIXME: doesn't work yet
         on_attach = function(client, bufnr)
           local opts = { buffer = bufnr }
+          -- FIXME: doesn't work yet
           vim.keymap.set('n', '<leader>dt', function()
             vim.cmd.RustLsp 'testables'
           end, vim.tbl_extend('force', opts, { desc = 'Debug test' }))
 
+          -- FIXME: doesn't work yet
           vim.keymap.set('n', '<leader>dr', function()
             vim.cmd.RustLsp { 'testables', bang = true }
           end, vim.tbl_extend('force', opts, { desc = 'Rerun last test' }))
+
+          -- Override :LspRestart in Rust buffers — rust-analyzer is managed by
+          -- rustaceanvim outside vim.lsp.config, so the built-in command errors.
+          vim.api.nvim_buf_create_user_command(bufnr, 'LspRestart', function()
+            local clients = vim.lsp.get_clients { bufnr = 0, name = 'rust-analyzer' }
+            for _, client in ipairs(clients) do
+              vim.lsp.stop_client(client.id, true)
+            end
+            vim.defer_fn(function()
+              vim.cmd 'edit' -- re-triggers FileType autocmd → rustaceanvim restarts
+            end, 1000)
+          end, { desc = 'Restart rust-analyzer via rustaceanvim' })
+
+          vim.keymap.set('n', '<leader>rw', function()
+            vim.cmd.RustLsp 'reloadWorkspace'
+          end, vim.tbl_extend('force', opts, { desc = 'Reload rust-analyzer workspace' }))
         end,
       },
     }
