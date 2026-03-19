@@ -16,6 +16,13 @@ return {
               maxResults = 20,
               matchCase = 'off',
             },
+            format = {
+              enabled = true,
+              settings = {
+                profile = 'GoogleStyle',
+                url = 'https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml',
+              },
+            },
           },
         },
       },
