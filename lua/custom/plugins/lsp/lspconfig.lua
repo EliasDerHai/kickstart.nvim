@@ -71,7 +71,7 @@ return {
         end
         map('<leader>td', toggle_diagnostics_mode, '[T]oggle [D]iagnostics')
 
-        if client and client.supports_method 'textDocument/inlayHint' then
+        if client and client:supports_method 'textDocument/inlayHint' then
           vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
           map('<leader>th', function()
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr })
@@ -81,7 +81,7 @@ return {
         --
         -- Automatic Highlighting on Cursor Hold
         --
-        if client and client.supports_method 'textDocument/documentHighlight' then
+        if client and client:supports_method 'textDocument/documentHighlight' then
           local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer = bufnr,
