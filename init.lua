@@ -1,15 +1,33 @@
+-- nvm is lazy-loaded in the shell, so nvim inherits a PATH without a node bin
+-- dir. Resolve nvm's default version ourselves and prepend its bin, so tools
+-- (typescript-tools, formatters) and `npm root -g` see nvm's global installs.
 local function setup_nvm_path()
-  local handle = io.popen 'command -v node 2>/dev/null'
-  if handle then
-    local node_path = handle:read('*a'):gsub('%s+', '')
-    handle:close()
+  local nvm_dir = vim.env.NVM_DIR or (vim.env.HOME .. '/.nvm')
+  local versions_dir = nvm_dir .. '/versions/node'
+  if vim.fn.isdirectory(versions_dir) == 0 then
+    return
+  end
 
-    if node_path ~= '' and node_path:match '%.nvm/' then
-      local node_dir = node_path:match '(.+)/[^/]+$'
-      if node_dir then
-        vim.env.PATH = node_dir .. ':' .. vim.env.PATH
-      end
+  -- Read the default alias (e.g. "22", "v22.21.1", "lts/*"); may be absent.
+  local alias = ''
+  local f = io.open(nvm_dir .. '/alias/default', 'r')
+  if f then
+    alias = vim.trim(f:read '*a' or '')
+    f:close()
+  end
+
+  -- Match installed version dirs against the alias, then pick the highest.
+  local prefix = alias:match '^v?(%d+)' -- major version from "22" / "v22.21.1"
+  local best
+  for _, dir in ipairs(vim.fn.readdir(versions_dir)) do
+    local match = prefix == nil or dir:match('^v' .. prefix .. '%.') or dir == 'v' .. alias
+    if match and (best == nil or dir > best) then
+      best = dir
     end
+  end
+
+  if best then
+    vim.env.PATH = versions_dir .. '/' .. best .. '/bin:' .. vim.env.PATH
   end
 end
 
